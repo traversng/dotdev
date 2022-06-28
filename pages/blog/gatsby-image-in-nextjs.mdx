@@ -1,0 +1,112 @@
+---
+title: 'Gatsby Image in Nextjs'
+description: 'One of my favorite things about Gatsby was its built in image optimization, but you can do it with Next too!'
+date: 2020-07-10T23:45:00+0000
+tag: performance, nextjs, gatsbyjs
+author: 'Travis Ueki'
+---
+
+## Image Optimization in Nextjs
+
+### Why
+
+Image optimization is very common causes of bad performance on a website.
+
+It has a direct effect on page loading times. You can read more here: [web.dev/fast](https://web.dev/fast/)
+
+When I first saw the gatsby image in action it was like magic.
+
+> So you are telling me I can have the sharpest images and not effect my percieved performance now?
+
+Yup
+
+## Gatsby implementation
+
+Ok so the GatsbyJS implementation is a lot easier to use (it comes out of the box), but lets take a look anyway.
+
+Assuming you have the source plugins setup and your queries ready to be consumed, it looks like so:
+
+### Usage
+
+```js:pages/index.js
+import React from 'react'
+import { graphql } from 'gatsby'
+import Img from 'gatsby-image'
+
+export default ({ data }) => (
+  <div>
+    <h1>Hello gatsby-image</h1>
+  </div>
+)
+
+export const query = graphql`
+  query {
+    file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        # Makes it trivial to update as your page's design changes.
+        fixed(width: 125, height: 125) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+  }
+`
+```
+
+## NextJS implementation
+
+There are a few dependencies well need to accomplish this:
+
+- [Next Compose Plugins](https://github.com/cyrilwanner/next-compose-plugins)
+- [Next Optimized Images](https://github.com/cyrilwanner/next-optimized-images)
+
+### Config
+
+Once you install the plugins they are ready to go in your `next.config.js` file
+
+I recommend using `next-compose-plugins` to make extending your `next.config` easier.
+
+If you have thos installed its as simple as:
+
+```js:next.config.js
+const withPlugins = require('next-compose-plugins')
+const optimizedImages = require('next-optimized-images')
+module.exports = withPlugins([
+  [optimizedImages]
+])
+```
+
+Now at this point, its kinda ready. If you read the docs [here](https://github.com/cyrilwanner/next-optimized-images) its mentioned that:
+
+> Starting from version 2, you have to install the optimization packages you need in your project in addition to this plugin. next-optimized-images then detects all the supported packages and uses them.
+
+so if you have JPG, PNG, and SVG images in your project, you need to add the packages that support them: `npm install imagemin-mozjpeg imagemin-optipng imagemin-svgo`
+
+### Usage
+
+```js:pages/index.jsx
+import React from 'react'
+
+export default () => (
+  <div>
+    <img src={require('./images/my-image.jpg')} />
+    <img src={require('./images/my-small-image.png')} />
+    <img src={require('./images/my-icon.svg')} />
+  </div>
+)
+
+/**
+ * Results in:
+ *
+ * <div>
+ *   <img src="/_next/static/images/my-image-5216de428a8e8bd01a4aa3673d2d1391.jpg" />
+ *   <img src="data:image/png;base64,..." />
+ *   <img src="/_next/static/images/my-icon-572812a2b04ed76f93f05bf57563c35d.svg" />
+ * </div>
+ */
+```
+
+### Done
+
+So there you have it. Now you can have the pretty image optimization that `GatsbyJS` users love and enjoy in `NextJS`
