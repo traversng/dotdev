@@ -1,9 +1,17 @@
 const YEAR = new Date().getFullYear()
 
 export default {
+  darkMode: true,
+  header: (
+    <script
+      async
+      src="https://platform.twitter.com/widgets.js"
+      charset="utf-8"
+    ></script>
+  ),
   footer: (
     <small style={{ display: 'block', marginTop: '8rem' }}>
-      <time>{YEAR}</time> © Your Name.
+      <time>{YEAR}</time> © Travis Ueki.
       <a href="/feed.xml">RSS</a>
       <style jsx>{`
         a {
