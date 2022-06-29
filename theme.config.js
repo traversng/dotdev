@@ -9,6 +9,8 @@ export default {
       )}
       {meta.tag && <meta name="keywords" content={meta.tag} />}
       {meta.author && <meta name="author" content={meta.author} />}
+      {meta.image && <meta property="og:image" content={meta.image} />}
+      {meta.image && <meta name="twitter:image" content={meta.image} />}
     </>
   ),
   footer: (
