@@ -68,3 +68,19 @@ img.next-image {
   aspect-ratio: 16 / 9;
   width: 100%;
 }
+
+.image-container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.image-container span {
+  position: unset !important;
+}
+
+.image-container .image {
+  object-fit: contain;
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
+}
