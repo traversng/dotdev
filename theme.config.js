@@ -2,12 +2,14 @@ const YEAR = new Date().getFullYear()
 
 export default {
   darkMode: true,
-  header: (
-    <script
-      async
-      src="https://platform.twitter.com/widgets.js"
-      charset="utf-8"
-    ></script>
+  head: ({ title, meta }) => (
+    <>
+      {meta.description && (
+        <meta name="description" content={meta.description} />
+      )}
+      {meta.tag && <meta name="keywords" content={meta.tag} />}
+      {meta.author && <meta name="author" content={meta.author} />}
+    </>
   ),
   footer: (
     <small style={{ display: 'block', marginTop: '8rem' }}>
