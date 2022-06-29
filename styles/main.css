@@ -63,3 +63,8 @@ img.next-image {
 .nav-line .nav-link {
   color: #69778c;
 }
+
+.video {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
