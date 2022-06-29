@@ -4,6 +4,7 @@ export default {
   darkMode: true,
   head: ({ title, meta }) => (
     <>
+      {meta.title && <meta name="title" content={title} />}
       {meta.description && (
         <meta name="description" content={meta.description} />
       )}
