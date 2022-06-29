@@ -1,6 +1,7 @@
 const YEAR = new Date().getFullYear()
 
 export default {
+  unstable_staticImage: true,
   darkMode: true,
   head: ({ title, meta }) => (
     <>
